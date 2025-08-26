@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Task Manager - Organize your tasks with categories, priorities, due dates and more">
+    <title>Task Manager | Professional Portfolio Project</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-tasks" aria-hidden="true"></i> Task Manager</h1>
+            <p>Organize your life, boost your productivity</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Add Task Form -->
+        <section class="card" aria-labelledby="add-task-heading">
+            <div class="card-header">
+                <h2 id="add-task-heading">Add New Task</h2>
+            </div>
+            <form id="task-form" novalidate>
+                <div class="form-group">
+                    <label for="task-title" class="sr-only">Task title</label>
+                    <input type="text" id="task-title" placeholder="Task title" required aria-required="true">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="task-category" class="sr-only">Category</label>
+                        <select id="task-category" aria-label="Task category">
+                            <option value="Work">Work</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Shopping">Shopping</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="task-due-date" class="sr-only">Due date</label>
+                        <input type="date" id="task-due-date" aria-label="Due date">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="task-priority" class="sr-only">Priority</label>
+                        <select id="task-priority" aria-label="Task priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="task-description" class="sr-only">Description</label>
+                    <textarea id="task-description" placeholder="Description (optional)" aria-label="Task description"></textarea>
+                </div>
+                
+                <button type="submit" id="add-task-btn" class="btn btn-primary">
+                    <i class="fas fa-plus" aria-hidden="true"></i> Add Task
+                </button>
+            </form>
+        </section>
+
+        <!-- Controls Section -->
+        <section class="card" aria-labelledby="manage-tasks-heading">
+            <div class="card-header">
+                <h2 id="manage-tasks-heading">Manage Tasks</h2>
+            </div>
+            <div class="controls-section">
+                <div class="search-container">
+                    <label for="search-input" class="sr-only">Search tasks</label>
+                    <input type="text" id="search-input" placeholder="Search tasks by title or description..." aria-label="Search tasks">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </div>
+                
+                <div class="filter-container">
+                    <label for="category-filter" class="sr-only">Filter by category</label>
+                    <select id="category-filter" aria-label="Filter by category">
+                        <option value="all">All Categories</option>
+                        <option value="Work">Work</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Shopping">Shopping</option>
+                    </select>
+                    
+                    <label for="priority-filter" class="sr-only">Filter by priority</label>
+                    <select id="priority-filter" aria-label="Filter by priority">
+                        <option value="all">All Priorities</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    
+                    <label for="status-filter" class="sr-only">Filter by status</label>
+                    <select id="status-filter" aria-label="Filter by status">
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                
+                <div class="export-container">
+                    <button id="export-btn" class="btn btn-success" aria-label="Export tasks to JSON">
+                        <i class="fas fa-file-export" aria-hidden="true"></i> Export Tasks
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Task List -->
+        <section class="card" aria-labelledby="tasks-heading">
+            <div class="card-header">
+                <h2 id="tasks-heading">Your Tasks</h2>
+            </div>
+            <div id="task-list" role="list">
+                <!-- Tasks will be dynamically added here -->
+            </div>
+            
+            <div id="empty-state" class="empty-state" role="status">
+                <i class="fas fa-clipboard-list" aria-hidden="true"></i>
+                <h3>No tasks yet</h3>
+                <p>Add your first task to get started!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Edit Task Modal -->
+    <div id="edit-modal" class="modal" role="dialog" aria-labelledby="edit-modal-heading" aria-hidden="true">
+        <div class="modal-content" role="document">
+            <button class="close" aria-label="Close dialog">&times;</button>
+            <h2 id="edit-modal-heading">Edit Task</h2>
+            <form id="edit-task-form" novalidate>
+                <input type="hidden" id="edit-task-id">
+                
+                <div class="form-group">
+                    <label for="edit-task-title">Task title</label>
+                    <input type="text" id="edit-task-title" placeholder="Task title" required aria-required="true">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-task-category">Category</label>
+                        <select id="edit-task-category" aria-label="Task category">
+                            <option value="Work">Work</option>
+                            <option value="Personal">Personal</option>
+                            <option value="Shopping">Shopping</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-task-due-date">Due date</label>
+                        <input type="date" id="edit-task-due-date" aria-label="Due date">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-task-priority">Priority</label>
+                        <select id="edit-task-priority" aria-label="Task priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-task-description">Description</label>
+                    <textarea id="edit-task-description" placeholder="Description" aria-label="Task description"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Update Task</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Task Manager | Made by Abdul Rehman</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
