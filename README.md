@@ -15,7 +15,7 @@ A professional task management application built with HTML, CSS, and JavaScript.
 
 ## Live Demo
 
-[View Live Demo](https://YOUR_USERNAME.github.io/task-manager/)
+[View Live Demo](https://abdulrehman-syed.github.io/task-manager)
 
 ## Technologies Used
 
